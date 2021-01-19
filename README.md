@@ -14,4 +14,22 @@ Node JS is a server-side JavaScript language. Port of chrome V8 engin to desktop
 		- V8 : Google
 - Node js is created by Ryan Dahl in 2009.
 
+## What can i create with NodeJs
+Any think can do with JavaScript. like 
+- Tooling (build, automation, etc)
+	- like, automate deployment, version.
+- API's (REST, Realtime, etc)
+	- like - REST APIs AND GraphQL APIs, realtime API like web sockets.
+	- Node high concurrency because of its event loop architecture.
+- CDNs
+	- Mean: some assets are delivered to your customers as fast as possible.
+- Shareable libraries
+	- The comumminity is big. People Create libraries and modules and share them with people.
+- Desktop applications
+	- Use Electrone, SWJS and etc. to make desktop application
+- IOT (Internet of things)
+	- so many frameworks for IOT devieces and the JavaScript Robotics & IoT Platform
+		- [Johnny-Five](http://johnny-five.io/)
+		- [RaspBerry Pi](https://www.raspberrypi.org/)
+- Pretty much anything because node is on everything now
 
