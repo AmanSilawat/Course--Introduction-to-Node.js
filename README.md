@@ -47,8 +47,8 @@ Recommended. allows you to run many versions of node whenever and doesn't mess u
 How to evaluate your JavaScript file in terminal. Two way to evaluate the code.
 
 ### Interactive REPL (Read Evaluate Print Loop)
-	- Like browser console
-	- Just type the node command with no argument
+- Like browser console
+- Just type the node command with no argument
 Like this in terminal: 
 
 ```
@@ -90,5 +90,14 @@ hello NodeJs
 ```
 
 ---
-
-
+## Browser vs Nodejs
+|Browser				|Nodejs						|Description													|
+|:--					|:--						|:-														|
+|Build Interactive apps for the web	|Build server side apps and scripts		|make visual things in chrome but in not no visual graphical thing						|
+|DOM					|Nope, no GUI (can virtualize: fake DOM)	|In browser Combination of HTML, CSS, JavaScript and rendring the DOM OR CSSOM					|
+|Window					|No window, but does have a global		|In browser fetch, alert, location and history but in Nodejs have another global				|
+|Fragmentation				|Versioned, so no fragmentation			|Diffrent browser and diffrent specificaion. In broser[Can i use](https://caniuse.com/)				|
+|optional modules (es6)			|Required modules (commonjs +)			|[ECMAScript 6](https://262.ecma-international.org/6.0/), [CommonJs](https://requirejs.org/docs/commonjs.html)	|
+|Cannot access filesystem		|Can access filesystem				|Browser doesn't use filesystem For security risk but in Nodejs use filesystem.					|
+|Async					|Async						|Both async													|
+|					|No browser based APIs				|No browser based APIs in NodeJs.										|
