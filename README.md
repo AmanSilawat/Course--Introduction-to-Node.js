@@ -395,3 +395,57 @@ for example like this.
 ```
 $ node example.js list filename
 ```
+
+
+## Asynchronous Node
+
+### Asynchronous Code in Node.js
+
+NodeJs is single Threaded and event based.
+
+### Asynchronous Patterns
+
+callback pattern
+```
+// callback takes error as first arg, and result as second
+doAsyncThing((error, result) => {})
+```
+
+
+promises
+```
+doAsyncThing()
+  .then(result => {})
+  .catch(error => {})
+```
+
+
+async / await
+```
+const run = async () => {
+  const results = await doAsyncThing() // must return a promise
+  console.log('hello')
+}
+```
+
+
+### Servers
+
+A server job is handle a request from some one of the client like browser, mobile  etc. One Server handle multiple client requests. 
+
+### Exercise
+
+Questions will be found in the [slide](https://slides.com/scotups/deck/fullscreen#/22/0/4) of Scott Moss
+You'll be refactoring and fixing a simple static asset server. The server uses blocking sync code and crashes whenever a request comes in that is asking for an asset that is not found. Neither of those are desirable. You'll also have to teach the server how to server the assets it has in the assets folder.
+
+Answer in my git [here](https://github.com/AmanSilawat/Course--Introduction-to-Node.js/tree/master/exercises/api)
+
+Go to `exercises/api` directory and run in terminal.
+```
+$ node server.js
+Server running at http://127.0.0.1:3000/
+GET / 200
+GET /style.css 200
+GET /favicon.ico 404
+GET /style.css 200
+```
