@@ -279,3 +279,119 @@ Snapshots:   0 total
 Time:        1.921 s
 Ran all test suites.
 ```
+
+## Internal Modules(Shipped Modules) & npm
+
+node.js has some internal modules
+
+- fs - fileSystem module to interacting with files on a machine
+	```js
+	const fs = require('fs');
+	```
+	Use only without `./fs`. Mean, this is my module and only use `fs` than this is a internal or remote module.
+
+	Create a file `read.js`.
+	```js
+	const fs = require('fs');
+
+	const file = fs.readFileSync('./demo-text.txt', { encoding: 'utf-8' })
+		.toString();
+
+	console.log(file);
+	```
+
+	Run in terminal
+	```
+	$ node read.js
+	Hello this is only demo file.
+	```
+	
+- http - low level-ish module for creating network based programs, like APIs
+- path - useful for manipulating path strings and handling differences across many OS's
+
+	```
+	const path = require('path');
+	console.log(path.join('../../hello', 'app/', '../things'));
+	```
+
+### Remote Modules
+Download and use other modules from the internets. ability to share module. In remote modules now you have to be aware of malicious code.
+
+### Modules Recap
+
+three type of modules.
+1. Created by user or custom local modules.
+	```js
+	const lib = require('./main'); // Always have to use a "." first
+	```
+2. Internal module or Shipped modules.
+	```js
+	var fs = require('fs') // internal module, remote module with same name takes it
+	```
+3. Remote module.
+	```js
+	const lib = require('lib'); // the same name you used to install it with npm
+	```
+
+
+### NPM 
+CLI to manage remote modules.
+
+which NPM is installed in your system check it. like: npm, nvm and other.
+```
+$ which npm
+/usr/local/bin/npm
+```
+
+Check NPM version
+```
+$ npm --version
+// or
+$ npm -v
+7.0.14
+```
+
+Install lodash in NPM
+```
+$ npm install lodash
+// or
+$ npm i lodash
+```
+
+
+- publish, download, and update modules
+- Uses package.json file in your NodeJs project to determine dependencies
+Stores remote modules in the node_modules folder
+
+### yarn
+yarn is same like npm. yarn is made by facebook
+
+Install lodash in yarn
+```
+$ yarn add lodash
+```
+
+
+### CLI with Node Solution
+
+```json
+"dependency": {
+	"lodash": "^4.17.11"
+}
+```
+Packages follow symver, first number is a major changes, the second number is fix bug and third number is small changes.
+
+"patch, minor, major"
+"^4.17.11"
+
+
+```
+$ process.argv
+```
+
+This `process.argv` return a array. First value of this index is node path, send value is current file path, and third and more are the passed in that order.
+
+for example like this.
+```
+$ node example.js list filename
+```
