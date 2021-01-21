@@ -37,7 +37,7 @@ Any think can do with JavaScript. like
 ## Installing NodeJs
 
 ### From NodeJs Source
-	- this is a easiest way to install nodejs. limits: many version of nodejs available, one root place in your computer and can not put another version only manually do this work. Can caues permission errors.
+- this is a easiest way to install nodejs. limits: many version of nodejs available, one root place in your computer and can not put another version only manually do this work. Can caues permission errors.
 
 ### Using NVM (node version manager)
 Recommended. allows you to run many versions of node whenever and doesn't mess up permissions. 
@@ -106,87 +106,176 @@ hello NodeJs
 ### Globals
 Browser create your own global.
 
-**process** - has information about the environment the program is running in
-```
-$ console.log(process)
-```
+- **process** - has information about the environment the program is running in
+	```
+	$ console.log(process)
+	```
 
-I will get this creazy object
+	I will get this creazy object
+	```
+	process {
+		version: 'v15.3.0',
+		versions: {
+			node: '15.3.0',
+			v8: '8.6.395.17-node.22',
+			uv: '1.40.0',
+			zlib: '1.2.11',
+			brotli: '1.0.9',
+			ares: '1.16.1',
+			modules: '88',
+			nghttp2: '1.41.0',
+			napi: '7',
+			llhttp: '2.1.3',
+			openssl: '1.1.1g',
+			cldr: '37.0',
+			icu: '67.1',
+			tz: '2020a',
+			unicode: '13.0'
+		},
+		arch: 'x64',
+		//..
+	//..
+	}
+	```
+	Get all the information about the process. So it includes things about the machine, cores, name, path and location,  environment verables and etc.
+
+
+- **require** - function to find and use modules in current module
+	NodeJs uses commanJS. It is a module pattern. Get file or a function and some other stuff through module.
+
+- **__dirname** - the current directory path.
+
+	Use `__dirname` like this create a file in `code.js`
+	```
+	console.log(__dirname);
+	```
+
+	Run the `code.js` file in your terminal.
+	```
+	$ node code.js
+	/home/aman/frontend/Course--Introduction-to-Node.js
+	```
+
+- **module** - information about current module, methods or making module consumable
+	Every code or file in NodeJs is a module. this feature is by default in NodeJs
+
+	For Example 
+	```
+	$ node
+	> console.log(module)
+	Module {
+	id: '<repl>',
+	path: '.',
+	exports: {},
+	filename: null,
+	loaded: false,
+	children: [],
+	paths: [
+		'/home/aman_silawat/frontend/Course--Introduction-to-Node.js/repl/node_modules',
+		'/home/aman_silawat/frontend/Course--Introduction-to-Node.js/node_modules',
+		'/home/aman_silawat/frontend/node_modules',
+		'/home/aman_silawat/node_modules',
+		'/home/node_modules',
+		'/node_modules',
+		'/home/aman_silawat/.node_modules',
+		'/home/aman_silawat/.node_libraries',
+		'/usr/local/lib/node'
+	]
+	}
+	```
+
+- **global** - like window, its the "global" object. Almost NEVER use this.
+	when use the global?
+	We should use global only to test the code other never use the global.
+
+
+
+
+
+
+### What are modules?
+
+Module like encapsulated code. A module is a separate unit. Each module in Node.js has its own context, so it cannot interfere with other modules or pollute global scope, each module can be placed in a separate .js file under a separate folder.
+
 ```
-process {
-	version: 'v15.3.0',
-	versions: {
-		node: '15.3.0',
-		v8: '8.6.395.17-node.22',
-		uv: '1.40.0',
-		zlib: '1.2.11',
-		brotli: '1.0.9',
-		ares: '1.16.1',
-		modules: '88',
-		nghttp2: '1.41.0',
-		napi: '7',
-		llhttp: '2.1.3',
-		openssl: '1.1.1g',
-		cldr: '37.0',
-		icu: '67.1',
-		tz: '2020a',
-		unicode: '13.0'
-	},
-	arch: 'x64',
-	 //..
-//..
+var module1 = (function(exports, require, module, __filename, __dirname){
+  // your node js code in a file
+})
+
+var module2 = (function(exports, require, module, __filename, __dirname){
+  // your node js code in another file
+}) 
+```
+This course is written by node.js. only five parameter use in this function because these parameter value pass in function with different value.
+
+
+### Modules in Nodejs
+
+- NodeJs uses commonJs for its module system.
+- As the author, you decide how and what to expose from your modules, to other modules.
+
+
+```js
+const add = (num, num2) => {
+	//..
 }
+const notPublic = () => {}
+module.exports = add
+```
+Which value must be returned in the model. `notPublic` functions are a private function, it does not expose this function.
 
+Use many patter in `module.export`. this called name exports.
+```js
+module.exports = {add(){}, think(){}, value: 1}
 ```
 
-Get all the information about the process. So it includes things about the machine, cores, name, path and location,  environment verables and etc.
-
-**require** - function to find and use modules in current module
-NodeJs uses commanJS. It is a module pattern. Get file or a function and some other stuff through module.
-
-**__dirname** - the current directory path.
-
-Use `__dirname` like this create a file in `code.js`
-```
-console.log(__dirname);
+Export only on thing. This called default export.
+```js
+const add = (num, num2) => {}
+module.exports = add
 ```
 
-Run the `code.js` file in your terminal.
-```
-$ node code.js
-/home/aman/frontend/Course--Introduction-to-Node.js
-```
+Export is very helpful for **performance** reasons like tree shaking. The dependency tree to figure out what to bundle in your app and what not bundled. Developer is understand, what dependency public and what dependency private.
 
-**module** - information about current module, methods or making module consumable
-Every code or file in NodeJs is a module. this feature is by default in NodeJs
-
-For Example 
-```
-$ node
-> console.log(module)
-Module {
-  id: '<repl>',
-  path: '.',
-  exports: {},
-  filename: null,
-  loaded: false,
-  children: [],
-  paths: [
-    '/home/aman_silawat/frontend/Course--Introduction-to-Node.js/repl/node_modules',
-    '/home/aman_silawat/frontend/Course--Introduction-to-Node.js/node_modules',
-    '/home/aman_silawat/frontend/node_modules',
-    '/home/aman_silawat/node_modules',
-    '/home/node_modules',
-    '/node_modules',
-    '/home/aman_silawat/.node_modules',
-    '/home/aman_silawat/.node_libraries',
-    '/usr/local/lib/node'
-  ]
-}
+Add another property in **module**
+```js
+module.export = {value: 1}
+module.export.more = {value2: 10}
 ```
 
-**global** - like window, its the "global" object. Almost NEVER use this.
-when use the global?
-We should use global only to test the code other never use the global.
+### Using modules
+
+- The Nodejs runtime injects another global, require.
+- This function takes a relative path to the module that you want to consume, and synchronously loads it by returning whatever the target module exported.
+
+#### Example:
+[default export module](https://github.com/AmanSilawat/Course--Introduction-to-Node.js/tree/master/module/import-node-module/default-exports)
+[name export module](https://github.com/AmanSilawat/Course--Introduction-to-Node.js/tree/master/module/import-node-module/name-exports)
 
 
+### Exercise
+Convert browser code to node js **frontendmasters** [Convert Browser JavaScript Exercise](https://frontendmasters.com/courses/node-js/convert-browser-javascript-exercise/)
+
+The three files inside the browser folder are to be converted into node js. Exercise code: [In my ripo](https://github.com/AmanSilawat/Course--Introduction-to-Node.js/tree/master/exercises/modules)
+
+**How to test your code** in terminal
+```
+$ npm install npm jest
+$ npx jest
+PASS  ./test.js
+  data
+    ✓ users (2 ms)
+    ✓ posts
+  api
+    ✓ getUserById (151 ms)
+    ✓ getPostsForUser (152 ms)
+  app
+    ✓ showPostsForCurrentUser (152 ms)
+    ✓ showUserProfile (151 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       6 passed, 6 total
+Snapshots:   0 total
+Time:        1.921 s
+Ran all test suites.
+```
