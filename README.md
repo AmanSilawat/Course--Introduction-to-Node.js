@@ -508,3 +508,7 @@ Snapshots:   0 total
 Time:        1.881 s
 Ran all test suites.
 ```
+
+## Sharing module
+
+Push code to github, publish to NPM.
