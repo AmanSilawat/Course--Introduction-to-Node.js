@@ -449,3 +449,62 @@ GET /style.css 200
 GET /favicon.ico 404
 GET /style.css 200
 ```
+
+
+
+## Debugging & Testing
+
+- We can debugging through the console.
+- user inspector
+	Start server with debugging mode.
+	```
+	$ node --inspect server.js
+	```
+
+	In chrome search bar you have to type `chrome://inspect` and Click the 'Inspect' link on the remote target.
+
+- text editor integration feature.
+
+
+### Type of test
+
+- unit test
+- integrated test: what api call
+- end-to-end : 
+- ui
+- snapshot
+- jperformance
+
+
+
+### Exercise
+
+You have to debug and track down some issues in a small app. Use your logging and inspector to find them. Try and fix them, once you do, write some test to make sure it stays fixed.
+
+Goto the `exercises/testing` directory [on my ripo](https://github.com/AmanSilawat/Course--Introduction-to-Node.js/tree/master/exercises/testing)
+
+
+Install some NPM packages
+```
+$ npm i npm i morgan body-parser express
+```
+
+**How to test your code** in terminal
+```
+$ npm install npm jest
+$ npx jest
+PASS  ./test.js
+  users
+    fixId
+      ✓ convert param id to db id (3 ms)
+    findUser
+      ✓ finds user by id if user is there
+    deletUser
+      ✓ deletes user with id if user is there (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       3 passed, 3 total
+Snapshots:   0 total
+Time:        1.881 s
+Ran all test suites.
+```
