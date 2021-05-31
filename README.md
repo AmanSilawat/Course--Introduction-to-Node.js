@@ -47,6 +47,16 @@ Recommended. allows you to run many versions of node whenever and doesn't mess u
 How to evaluate your JavaScript file in terminal. Two way to evaluate the code.
 
 ### Interactive REPL (Read Evaluate Print Loop)
+The **REPL** feature of Node is very useful in experimenting with Node.js codes and to debug JavaScript codes.
+
+- **Read** - Read user's input, parse the input into JavaScript, and store in memory.
+- **Evaluate** - Takes and evaluate the data structure
+- **Print** - Print the result.
+- **Loop** - Loops the above command until the user presses ctrl-c twice.
+
+<br />
+
+For Example :
 - Like browser console
 - Just type the node command with no argument
 Like this in terminal: 
@@ -102,6 +112,18 @@ hello NodeJs
 |Cannot access filesystem		|Can access filesystem				|Browser doesn't use filesystem For security risk but in Nodejs use filesystem.					|
 |Async					|Async						|Both async													|
 |					|No browser based APIs				|No browser based APIs in NodeJs.										|
+
+### Node.js core Module
+Consider modules to be the same as JavaScript Libraries. A set of functions you want to include in your application.
+
+Node.js has a set of build-in modules which you can use without any further installation.
+some core modules (built-in)
+- fs
+- path
+- zlib
+- http
+- assert
+- buffer
 
 ### Globals
 Browser create your own global.
@@ -428,6 +450,15 @@ const run = async () => {
 }
 ```
 
+**fs.readFile** asynchronous function
+```js
+fs.readFile("read.txt", "UTF-8", (err, result) => {
+	console.log('file is created');
+	console.log('err: ', err);
+	console.log('result: ', result);
+})
+```
+
 
 ### Servers
 
@@ -512,3 +543,113 @@ Ran all test suites.
 ## Sharing module
 
 Push code to github, publish to NPM.
+
+
+## Module export function
+Under the hood, NodeJS does not run our code directly, it wraps up code inside a function before execution.
+
+NodeJS wraps function wrapper structure:
+```js
+(function (exports, require, module, __filename, __dirname) {
+  //module code
+});
+```
+
+## create server using http npm package
+
+```js
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+	req.end('Hello this a node server');
+})
+
+// listen the request
+server.listen(8000, '127.0.0.1', () => {
+	console.log('listening to the prot no. 8000')
+})
+```
+
+`http` is a Node.js core module. the `req` request  object can be used to get information about the current HTTP request. e.g. url, request header, and data.
+
+`res` response object can be used to send a response for a current request.
+
+## set routing
+
+```js
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+	// create home page route
+	if(req.url == '/') {
+		req.end('This is a HomePage.');
+	}
+	// create another route
+	else if(req.url == '/product') {
+		req.write('This is a ProductPage.');
+		req.end();
+	}
+
+	// for other all route
+	else {
+		req.writeHead(404, {'Content-Type': 'text/html'})
+		req.end('Oops page not found.')
+	}
+})
+
+// listen the request
+server.listen(8000, '127.0.0.1', () => {
+	console.log('listening to the prot no. 8000')
+})
+```
+
+
+## JSON
+json stands from JavaScript Object Notation. json is a lightweight format for sorting and transporting data. json is used when data is spend from a server to a web page.
+
+
+## API
+API is the acronym for application Programing Interface, which is a software intermediary that allows two application to talk to each other. Each time you use an app like Facebook, send an instant message, or check weather on you phone, you are using an API.
+
+API like a service which allows us to request a data.
+
+
+## Event Module
+emitter objects emit named events that cause previously registered listeners to be called.
+
+basically has two main features:
+- Emitting name events.
+- Registering and un-registering listener function.
+
+```js
+const EventEmitter = require('events');
+const event = new EventEmitter();
+
+event.on('sayMyName', () => {
+	console.log('your name is a')
+});
+
+event.on('sayMyName', () => {
+	console.log('your name is b')
+});
+
+event.on('sayMyName', () => {
+	console.log('your name is c')
+});
+
+event.emit('sayMyName); 
+```
+
+<br />
+
+pass parameters in emitter events
+```js
+const EventEmitter = require('events');
+const event = new EventEmitter();
+
+event.on('check', (statusCode, msg) => {
+	console.log(`status code is ${statusCode} and msg : ${msg}`)
+});
+
+event.emit('check', 200, 'ok')
+```
