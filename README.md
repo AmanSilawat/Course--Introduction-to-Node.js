@@ -653,3 +653,123 @@ event.on('check', (statusCode, msg) => {
 
 event.emit('check', 200, 'ok')
 ```
+
+## Stream
+Streams are one of the fundamental concepts of Node.js. Streams are a type of data-handling methods and are used to read or write input into output sequentially. Streams are used to handle reading/writing files or exchanging information in an efficient way.
+
+Streaming mean listening to music or watching video in real time, instead of downloading a file to your computer and watching it later.
+
+- Readable - Stream which is used for read operation.
+- Writable - Stream which is used for write operation.
+- duplex - Stream which can be used bor both read and write operation.
+- Transform - A type of duplex stream where the output is computed based on input.
+
+<br />
+
+Each type of Steam is an EventEmitter instance and throws serval events at different instance of times. For ex., some of the commonly used events are...
+data - This event is fired when there is data is available to read.
+end - This event is fired when there is no more data to read.
+error - This event is fired when there is any error receiving or writing data.
+finish - This event is fired when all the data has been flushed to underling system. 
+
+<br />
+
+Example of `createReadStream` 
+```js
+const http = require('http');
+const fs = require('fs');
+
+const server = http.createServer();
+server.on()
+
+server.on('request', (req, res) => {
+    // Reading from a stream
+    // Create a readable stream
+    // Handle stream events -> data, end, error
+    const rStream = fs.createReadStream('./stream.js');
+    rStream.on('data', (chunk) => {
+        res.write(chunk);
+    })
+    rStream.on('error', (err) => {
+        console.log(err)
+    });
+    rStream.on('end', () => {
+        res.end();
+    });
+});
+
+server.listen(3000, '127.0.0.1', () => {
+    console.log('http://127.0.0.1:3000')
+});
+```
+
+<br />
+
+## stream.pipe()
+
+This method used to take a readable stream and connect it to a writeable stream.
+
+```js
+const http = require('http');
+const fs = require('fs');
+
+const server = http.createServer();
+
+server.on('request', (req, res) => {
+    const rStream = fs.createReadStream('./stream.pipe.js');
+    rStream.pipe(res);
+});
+
+server.listen(3000, '127.0.0.1', () => {
+    console.log('http://127.0.0.1:3000')
+});
+```
+
+## ExpressJs
+Express.js is a node.js framework. it's the most popular framework as of now (the most starred on NPM).
+
+ExpressJS is a web application framework that provides you with a simple API to build websites, web apps and back ends.
+
+### why do need Express.js
+Try to write a small REST API server in plain Node.js (that is, using only core modules) and then in Express.js. The latter will you 5-10x less time and lines of code.
+
+
+`req` and `res` parameter in the get method.
+```js
+const express = require('express');
+const app = express();
+app.get('/', (req, res) => { //.. })
+```
+The callback function has 2 parameters, request(req) and response(res). The request object(req) represents the HTTP request and has properties the request query string, parameters, body, HTTP headers, etc.
+
+Similarly, the response object represents the HTTP response that the Express app sends when it receives an HTTP request.
+
+
+
+### body-parser
+To handle http POST request in Express.js version 4 and above, you need to install middleware module called body-parser
+
+body-parser extract the entire body portion of an incoming request stream and expose it on req.body.
+
+This body-parser module parse the JSON, buffer, string and URL encoded data submitted using HTTP POST request.
+
+
+```js
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.post('/user-form', (req, res) => {
+	res.end(req.body);
+})
+```
+
+### Template engine
+A template engine enables you to use static template files in your application. At runtime, the template engine replaces variables in a template file with actual values, and transforms the template into an HTML file sent to the client. This approach makes it easier to design an HTML page.
+
+Popular template engines
+- [Pug](https://pugjs.org/api/getting-started.html)
+- [Mustache](https://www.npmjs.com/package/mustache)
+- [EJS](https://www.npmjs.com/package/ejs)
+- [HBS](https://handlebarsjs.com/)
