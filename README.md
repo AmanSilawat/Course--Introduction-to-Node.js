@@ -761,6 +761,93 @@ server.listen(3000, '127.0.0.1', () => {
 });
 ```
 
+<br />
+
+### createReadStream set encoding
+```js
+const txt_path = path.join(__dirname, './createReadStream-set-encoding.js');
+
+const r_stream = fs.createReadStream(txt_path);
+r_stream.setEncoding('utf-8');
+
+let  data = '';
+r_stream.on('data', (chunk) => {
+    data += chunk;
+    console.log(chunk)
+});
+
+r_stream.on("end", () => {
+    console.log('end : ', data)
+});
+```
+
+<br />
+
+### createReadStream set encoding
+```js
+const txt_path = path.join(__dirname, './demo.txt');
+const w_stream = fs.createWriteStream(txt_path);
+
+// write some string
+w_stream.write('hello this a chunk.', 'utf8');
+
+// end the write stream
+w_stream.end();
+
+w_stream.on('finish', () => {
+    console.log('end of the writable stream');
+})
+```
+
+<br />
+
+### Pipe stream
+```js
+const path = require('path');
+const fs = require('fs');
+
+const r_stream = fs.createReadStream(path.join(__dirname, './pipe-stream.js'));
+const w_stream = fs.createWriteStream(path.join(__dirname, './demo.txt'));
+
+r_stream.pipe(w_stream);
+```
+
+<br />
+
+### Pipe chaining with zlib
+```js
+const path = require('path');
+const fs = require('fs');
+const zlib = require('zlib');
+
+const r_stream = fs.createReadStream(path.join(__dirname, './pipe-stream.js'));
+
+r_stream
+    .pipe(zlib.createGzip())
+    .pipe(fs.createWriteStream('pipe-stream.js.gz'));
+
+r_stream.on('end', () => console.log('end r_stream'))
+```
+
+<br />
+
+### pipe chaining with gunzip
+```js
+const path = require('path');
+const fs = require('fs');
+const zlib = require('zlib');
+
+const r_stream = fs.createReadStream(path.join(__dirname, './pipe-stream.js.gz'));
+
+r_stream
+    .pipe(zlib.createGunzip())
+    .pipe(fs.createWriteStream('gunzip-extract.js'));
+
+r_stream.on('end', () => console.log('end r_stream'))
+```
+
+<br />
+
 ## ExpressJs
 
 Express.js is a node.js framework. it's the most popular framework as of now (the most starred on NPM).
@@ -893,3 +980,49 @@ We perform CURD operation to create RESTful API
 What is mean *State* in "REpresentational **State** Transfer"
 
 As per the REST (REpresentational "State" Transfer) architecture, the server does not store any state about the client session on the server-side. Statelessness means that every HTTP request happens in complete separate (isolation). When the client makes an HTTP request, it includes all information necessary for the server to fulfill that request. That is, the response is received only on the basis of the request.
+
+
+## Stream throw Express
+
+```js
+const express = require('express');
+const path = require('path');
+const fs = require('fs');
+const app = express();
+const PORT = 3000;
+
+const img_path = path.join(__dirname, './../img/big-img.jpg');
+console.log(img_path)
+
+app.get('/', (req, res) => {
+    const r_stream = fs.createReadStream(img_path);
+
+    res.setHeader('ContentType', 'image/jpg')
+    r_stream.on('data', (chunk) => {
+        res.write(chunk);
+    });
+    
+    r_stream.on("end", () => {
+        res.end();
+    });
+});
+
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`)
+})
+```
+
+<br />
+
+**Or**
+
+<br />
+
+```js
+app.get('/', (req, res) => {
+    const r_stream = fs.createReadStream(img_path);
+    r_stream.pipe(res);
+});
+```
+
+
